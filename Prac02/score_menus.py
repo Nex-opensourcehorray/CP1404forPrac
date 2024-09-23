@@ -3,25 +3,23 @@ CP1404/CP5632 - Practical
 A menu to choose the option with error detection in function.
 """
 
-import random
+"""import random"""
 
 MENU = "(G)et a valid score\n(P)rint result\n(S)how stars\n(Q)uit\n>>>"
 
 
 def main():
+    get_scores = get_valid_score()
     choice = input(MENU).upper()
 
     while choice != 'Q':
         if choice == 'G':
-            get_score = determine_random_score()
-            print(f"Your score is: {get_score}")
+            print(f"Your score is: {get_scores}")
         elif choice == 'P':
-            scores = determine_random_score()
-            get_evaluate = determine_score(scores)
+            get_evaluate = determine_score(get_scores)
             print(f"Your result is: {get_evaluate}")
         elif choice == 'S':
-            star_scores = determine_random_score()
-            print_stars(star_scores)
+            print_stars(get_scores)
             print('\n')
         else:
             print("Invalid input!")
@@ -30,24 +28,32 @@ def main():
     print("Farewell.")
 
 
-def determine_score(scores):
+def get_valid_score():
+    scores = int(input("Please input the scores:"))
     if scores < 0 or scores > 100:
-        return "Invalid scores"
-    elif 50 <= scores < 90:
-        return "Passable"
-    elif 90 <= scores <= 100:
-        return "Excellent"
-    else:
-        return "Bad"
-
-
-def determine_random_score():
-    scores = random.randint(0, 100)
+        print("Invalid input! do it again!")
+        scores = int(input("Please input the scores:"))
     return scores
 
 
-def print_stars(star_scores):
-    for i in range(0, star_scores):
+def determine_score(get_scores):
+    if get_scores >= 90:
+        message = "Excellent"
+    elif get_scores >= 50:
+        message = "Passable"
+    else:
+        message = "Bad"
+    return message
+
+
+"""def determine_random_score():
+    scores = random.randint(0, 100)
+    return scores
+"""
+
+
+def print_stars(get_scores):
+    for i in range(0, get_scores):
         print("*" * i, end='')
 
 
