@@ -9,6 +9,7 @@ MENU = "(G)et a valid score\n(P)rint result\n(S)how stars\n(Q)uit\n>>>"
 
 
 def main():
+    """ The main function that holding the score menu."""
     get_scores = get_valid_score()
     choice = input(MENU).upper()
 
@@ -29,6 +30,7 @@ def main():
 
 
 def get_valid_score():
+    """The function can ensure the score will be range between 0 & 100."""
     scores = int(input("Please input the scores:"))
     if scores < 0 or scores > 100:
         print("Invalid input! do it again!")
@@ -37,6 +39,7 @@ def get_valid_score():
 
 
 def determine_score(get_scores):
+    """The function can determine you grade."""
     if get_scores >= 90:
         message = "Excellent"
     elif get_scores >= 50:
@@ -53,6 +56,7 @@ def determine_score(get_scores):
 
 
 def print_stars(get_scores):
+    """The function that helping you to print the asterisk."""
     for i in range(0, get_scores):
         print("*" * i, end='')
 
