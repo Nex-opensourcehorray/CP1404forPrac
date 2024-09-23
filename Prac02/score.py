@@ -6,17 +6,23 @@ import random
 
 
 def main():
+    input_scores = float(input("Please input the number:"))
+    while input_scores < 0 or input_scores > 100:
+        print("Invalid scores!")
+        input_scores = float(input("Please input the number:"))
+    output_grade = determine_score(input_scores)
 
-    scores = determine_random_score()
-    generate_evaluate = determine_score(scores)
-    print(f"Your score is: {scores}")
-    print(f"Your generate evaluate is: {generate_evaluate}")
-def get_valid_score(scores):
+    print(f"Your score is: {input_scores}")
+    print(f"Your grade is: {output_grade}")
+
+    generate_scores = determine_random_score()
+    generate_evaluate = determine_score(generate_scores)
+    print(f"Your score is: {generate_scores}")
+    print(f"Your generate grade is: {generate_evaluate}")
+
 
 def determine_score(scores):
-    if scores < 0 or scores > 100:
-        return "Invalid scores"
-    elif 50 <= scores < 90:
+    if 50 <= scores < 90:
         return "Passable"
     elif 90 <= scores <= 100:
         return "Excellent"
