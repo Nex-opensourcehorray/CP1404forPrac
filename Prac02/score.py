@@ -11,20 +11,19 @@ def main():
         print("Invalid scores!")
         input_scores = float(input("Please input the number:"))
     output_grade = determine_score(input_scores)
-
     print(f"Your score is: {input_scores}")
     print(f"Your grade is: {output_grade}")
 
     generate_scores = determine_random_score()
     generate_evaluate = determine_score(generate_scores)
-    print(f"Your score is: {generate_scores}")
+    print(f"Your generate score is: {generate_scores}")
     print(f"Your generate grade is: {generate_evaluate}")
 
 
 def determine_score(scores):
-    if 50 <= scores < 90:
+    if scores >= 50:
         return "Passable"
-    elif 90 <= scores <= 100:
+    elif scores >= 90:
         return "Excellent"
     else:
         return "Bad"
