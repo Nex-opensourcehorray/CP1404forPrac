@@ -51,9 +51,7 @@ print(f"{year} {name} for about ${cost:.0f}!")
 # 2 ^10 is 1024
 total_num = 1
 for i in range(0, 11):
-    if i == 10:
-        print(f" 2 ^{i: <1} is {total_num: >6}")
-    else:
-        print(f" 2 ^ {i: <1} is {total_num: >6}")
+    s = f" 2 ^ {i: <2} is {total_num: >6}"
+    print(s)
 
     total_num *= 2
