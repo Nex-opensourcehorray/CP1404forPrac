@@ -42,7 +42,7 @@ def is_valid_password(password):
             number_of_upper += 1
         if characters.isdigit():
             number_of_digit += 1
-
+    pass
     # TODO: if any of the 'normal' counts are zero, return False
     if number_of_lower == 0:
         return False
