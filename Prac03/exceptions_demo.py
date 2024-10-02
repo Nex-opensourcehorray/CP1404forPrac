@@ -9,6 +9,7 @@ Answer the following questions:
 try:
     numerator = int(input("Enter the numerator: "))
     denominator = int(input("Enter the denominator: "))
+    """The function that helping with avoiding zero division error."""
     if denominator == 0:
         print("We can't do divide when denominator is zero!")
         denominator = int(input("Enter the denominator: "))

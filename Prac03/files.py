@@ -5,10 +5,10 @@ to read files and answer the following questions.
 """
 
 # 1, ask name for file with open and close.
-"""user_name = input("Please input your name:")
+user_name = input("Please input your name:")
 in_file = open("name.txt", 'w')
 print(user_name, file=in_file)
-in_file.close()"""
+in_file.close()
 
 # 2, print your name from file with open and close.
 out_file = open("name.txt", 'r')

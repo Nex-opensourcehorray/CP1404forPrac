@@ -49,9 +49,11 @@ print(f"{year} {name} for about ${cost:.0f}!")
 # 2 ^ 8 is  256
 # 2 ^ 9 is  512
 # 2 ^10 is 1024
+
 total_num = 1
 for i in range(0, 11):
-    s = f" 2 ^ {i: <2} is {total_num: >6}"
+    """This function is to print the 2 to power of i with string formatting."""
+    s = f" 2 ^ {i: >2} is {total_num: >6}"
     print(s)
 
     total_num *= 2
