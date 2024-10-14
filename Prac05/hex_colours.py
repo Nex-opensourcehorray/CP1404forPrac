@@ -1,3 +1,7 @@
+"""
+CP1404/CP5632 Practical
+Colour hex code in a dictionary
+"""
 color_to_hex = {'Aqua': '#00ffff', 'Boysenberry': '#873260', 'Cambridge Blue': '#a3c1ad',
                 'Carnation Pink': '#ffa6c9', 'Chocolate': '#d2691e', 'Crystal': '#a7d8de',
                 'Dark Pastel Green': '#03c03c', 'Deep Space Sparkle': '#4a646c', 'Dogwood Rose': '#d71868',
