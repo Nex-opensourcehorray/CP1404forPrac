@@ -59,6 +59,7 @@ def read_csv_info(place_infos):
 
 
 def random_place(places_infos):
+    """This function is to generate random number and print it."""
     random_number = random.randint(0, len(places_infos)-1)
     random_city = places_infos[random_number][0]
     random_country = places_infos[random_number][1]
