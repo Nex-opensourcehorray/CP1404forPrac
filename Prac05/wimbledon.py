@@ -10,6 +10,7 @@ champions_for_win = {}
 
 
 def main():
+    """This function will do the printing."""
     read_from_csv()
     get_champion_count(champions)
     print("Wimbledon Champions:")
@@ -22,6 +23,7 @@ def main():
 
 
 def read_from_csv():
+    """This function allow you to read the csv and store it into two lists."""
     with open(FILENAME, "r", encoding="utf-8-sig") as in_file:
         for line in in_file:
             contexts = line.split(',')
@@ -35,6 +37,7 @@ def read_from_csv():
 
 
 def get_champion_count(champions):
+    """This function is to add the information to the dictionary."""
     for champion in champions:
         if champion in champions_for_win:
             champions_for_win[champion] += 1
@@ -44,6 +47,7 @@ def get_champion_count(champions):
 
 
 def organize_countries(countries):
+    """This function is to fetch the common countries to the other list."""
     common_countries = []
     [common_countries.append(x) for x in countries if x not in common_countries]
 
