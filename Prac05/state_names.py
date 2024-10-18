@@ -25,16 +25,17 @@ def main():
 def get_valid_input():
     """Deliver the error checking for input."""
     state_abbreviation = ''
-    is_not_valid_input = True
-    while is_not_valid_input:
+    valid_input = True
+    while valid_input:
         try:
+
             state_abbreviation = input("Enter short state: ").upper()
             if state_abbreviation == "":
                 break
             elif state_abbreviation not in CODE_TO_NAME:
                 print("Invalid short state")
             else:
-                is_not_valid_input = False
+                valid_input = False
         except ValueError:
             print("Invalid short state")
     return state_abbreviation

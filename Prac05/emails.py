@@ -26,7 +26,6 @@ def main():
 
 def gather_name(email_address):
     """This function is to fetch and split your name at the front of your email."""
-    """Suggestion: when your email input with your real name, please add a period in between."""
     mail_name = email_address.split('@')[0]
     mail_names = mail_name.split('.')
     capital_name = ' '.join(mail_names).title()
