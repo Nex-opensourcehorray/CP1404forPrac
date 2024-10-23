@@ -118,7 +118,7 @@ def add_information(place_infos):
 
 def save_travel_information_into_file(place_infos):
     """This function is use to save the modified information to the csv dataset."""
-    with open(FILENAME, "w", encoding='utf-8') as save_information_file:
+    with open(FILENAME, 'w', encoding='utf-8') as save_information_file:
         for place_info in place_infos:
             print(f"{place_info[0]},{place_info[1]},{place_info[2]},{place_info[3]}", file=save_information_file)
 
