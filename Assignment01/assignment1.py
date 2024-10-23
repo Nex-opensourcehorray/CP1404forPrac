@@ -20,34 +20,13 @@ ASTERISK_LABEL = '*'
 def main():
     """This function is to hold the menu option & your selection."""
     """Before get into the menu option, you should read in the document to the memory for first."""
-    travel_places = []
-    place_infos = []
-    asterisk_count = 0
-    text_number = 1
+    place_infos = read_csv_info()
     print(WELCOME)
     choice = input(MENU).upper()
     while choice != 'Q':
         if choice == 'D':
             """This statement will turn to display all the information from places.csv."""
-            read_csv_info(place_infos)
-            city_length = max(len(place_info[0]) for place_info in place_infos)
-            country_length = max(len(place_info[1]) for place_info in place_infos)
-            visit_length = max(len(place_info[2]) for place_info in place_infos)
-
-            for place_info in place_infos:
-                if place_info[3] == 'n':
-                    value = (f"{ASTERISK_LABEL}{text_number}. {place_info[0]: <{city_length}} in "
-                             f"{place_info[1]: <{country_length}} {place_info[2]: >{visit_length}}")
-                    asterisk_count += 1
-                    travel_places.append(value)
-                else:
-                    value = (f" {text_number}. {place_info[0]: <{city_length}} in "
-                             f"{place_info[1]: <{country_length}} {place_info[2]: >{visit_length}}")
-                    travel_places.append(value)
-                text_number += 1
-            for travel_place in travel_places:
-                print(travel_place)
-            print(f"{len(place_infos)} places tracked. You still want to visit {asterisk_count} places.")
+            print_information(place_infos)
         elif choice == 'R':
             """This statement will random pick a place for recommend."""
             random_place(place_infos)
@@ -56,26 +35,45 @@ def main():
             print("add.")
         elif choice == 'M':
             """This statement will change a place visited/unvisited label."""
-            for travel_place in travel_places:
-                print(travel_place)
-            print(f"{len(place_infos)} places tracked. You still want to visit {asterisk_count} places.")
+            print_information(place_infos)
+            print("marked.")
         else:
             print(INVALID_CHOICE)
 
         choice = input(MENU).upper()
 
+    save_travel_information_into_file(place_infos)
     print(f"places saved to {FILENAME}\n{FAREWELL}")
     """This statement will overwrite place.csv from the refresh List."""
 
 
-def read_csv_info(place_infos):
+def read_csv_info():
     """This function is use to get in the csv dataset."""
-    with open(FILENAME, newline='') as in_file:
-        reader = csv.reader(in_file)
-        for text in reader:
-            place_infos.append(text)
-
+    with open(FILENAME, 'r', encoding='utf-8') as place_infos_file:
+        reader = csv.reader(place_infos_file)
+        place_infos = [[text[0], text[1], text[2], text[3]] for text in reader]
     return place_infos
+
+
+def print_information(place_infos):
+    """This function is to print the blank for modification."""
+    index = 1
+    asterisk_count = 0
+    city_length = max(len(place_info[0]) for place_info in place_infos)
+    country_length = max(len(place_info[1]) for place_info in place_infos)
+    visit_length = max(len(place_info[2]) for place_info in place_infos)
+
+    for place_info in place_infos:
+        if place_info[3] == 'n':
+            print(f"{ASTERISK_LABEL}{index}. {place_info[0]: <{city_length}} in "
+                  f"{place_info[1]: <{country_length}} {place_info[2]: >{visit_length}}")
+            asterisk_count += 1
+        else:
+            print(f" {index}. {place_info[0]: <{city_length}} in "
+                  f"{place_info[1]: <{country_length}} {place_info[2]: >{visit_length}}")
+
+        index += 1
+    print(f"{len(place_infos)} places tracked. You still want to visit {asterisk_count} places.")
 
 
 def random_place(places_infos):
@@ -87,6 +85,14 @@ def random_place(places_infos):
 
 
 """def add_information():"""
+
+
+def save_travel_information_into_file(place_infos):
+    """This function is use to save the modified information to the csv dataset."""
+    with open(FILENAME, "w", encoding='utf-8') as save_information_file:
+        for place_info in place_infos:
+            print(f"{place_info[0]},{place_info[1]},{place_info[2]},{place_info[3]}", file=save_information_file)
+
 
 if __name__ == '__main__':
     main()
