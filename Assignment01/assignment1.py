@@ -32,7 +32,7 @@ def main():
             random_place(place_infos)
         elif choice == 'A':
             """This statement will add a place with specific detail for the List."""
-            print("add.")
+            add_information(place_infos)
         elif choice == 'M':
             """This statement will change a place visited/unvisited label."""
             print_information(place_infos)
@@ -61,7 +61,7 @@ def print_information(place_infos):
     asterisk_count = 0
     city_length = max(len(place_info[0]) for place_info in place_infos)
     country_length = max(len(place_info[1]) for place_info in place_infos)
-    visit_length = max(len(place_info[2]) for place_info in place_infos)
+    visit_length = max(len(str(place_info[2])) for place_info in place_infos)
 
     for place_info in place_infos:
         if place_info[3] == 'n':
@@ -84,7 +84,36 @@ def random_place(places_infos):
     print(f"Not sure where to visit next?\nHow about... {random_city} in {random_country}?")
 
 
-"""def add_information():"""
+def get_valid_word(prompt):
+    """Ensure your input is not blank."""
+    value = input(prompt).title()
+    while value == "":
+        print("Input can not be blank")
+        value = input(prompt).title()
+    return value
+
+
+def get_valid_number(prompt):
+    """Confirm your input number is not negative or equal than 0"""
+    value_verify = False
+    while not value_verify:
+        try:
+            value = int(input(prompt))
+            if value > 0:
+                return value
+            else:
+                print("Number must be > 0")
+        except ValueError:
+            print("Invalid input; enter a valid number")
+
+
+def add_information(place_infos):
+    """Add the information into the List."""
+    city_name = get_valid_word("Name: ")
+    country_name = get_valid_word("Country: ")
+    priority_number = get_valid_number("Priority: ")
+    print(f"{city_name} in {country_name} (Priority {priority_number}) added to Travel Tracker.")
+    place_infos.append([city_name, country_name, priority_number, 'n'])
 
 
 def save_travel_information_into_file(place_infos):
