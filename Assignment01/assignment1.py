@@ -2,7 +2,7 @@
 CP1404 Assignment 1 - Travel Tracker
 Name: mingsen hua
 Date started: 12/10/2024
-GitHub URL:
+GitHub URL: https://github.com/Nex-opensourcehorray/CP1404forPrac/blob/master/Assignment01/assignment1.py
 """
 import csv
 import random
