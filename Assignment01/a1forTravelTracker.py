@@ -28,6 +28,8 @@ def main():
     """Before get into the menu option, you should read in the document to the memory for first."""
     place_infos = read_csv_info()
     have_not_visited_places = read_asterisk_information(place_infos)
+    place_infos.sort()
+    have_not_visited_places.sort()
     print(WELCOME)
     choice = input(MENU).upper()
     while choice != QUIT:
