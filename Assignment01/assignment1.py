@@ -137,8 +137,7 @@ def add_information(place_infos, none_visited_places):
 
 
 def change_asterisk_label(place_infos):
-    """Determine whether the book is completed and modify the status"""
-
+    """Determine whether the places is visited and convert the status."""
     priority_numbers = len(place_infos)
     print("Enter the number of a place to mark as visited")
     visiting_figure = get_valid_place_number(priority_numbers) - 1
@@ -149,10 +148,10 @@ def change_asterisk_label(place_infos):
         print(f"You have already visited {place_infos[visiting_figure][0]}!")
 
 
-def get_valid_place_number(index):
-    """Add book maximum value correction after number checking"""
+def get_valid_place_number(priority_numbers):
+    """Add priority place value correction after number checking"""
     value = get_valid_number(">>> ")
-    while value > index:
+    while value > priority_numbers:
         print("Invalid place number")
         value = get_valid_number(">>> ")
     return value
