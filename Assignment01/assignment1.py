@@ -13,30 +13,37 @@ MENU = ('MENU:\nD - Display all places\nR - Recommend a random place\nA - Add a 
         'visited\nQ - Quit\n>>>')
 FAREWELL = 'Have a nice day! :)'
 INVALID_CHOICE = 'Invalid menu choice'
-
+QUIT = 'Q'
+DISPLAY = 'D'
+RANDOM = 'R'
+ADD = 'A'
+REMARK = 'M'
 ASTERISK_LABEL = '*'
+VISITED = 'v'
+NOT_VISITED = 'n'
 
 
 def main():
     """This function is to hold the menu option & your selection."""
     """Before get into the menu option, you should read in the document to the memory for first."""
     place_infos = read_csv_info()
+    have_not_visited_places = read_asterisk_information(place_infos)
     print(WELCOME)
     choice = input(MENU).upper()
-    while choice != 'Q':
-        if choice == 'D':
+    while choice != QUIT:
+        if choice == DISPLAY:
             """This statement will turn to display all the information from places.csv."""
             print_information(place_infos)
-        elif choice == 'R':
+        elif choice == RANDOM:
             """This statement will random pick a place for recommend."""
-            random_place(place_infos)
-        elif choice == 'A':
+            random_place(have_not_visited_places)
+        elif choice == ADD:
             """This statement will add a place with specific detail for the List."""
-            add_information(place_infos)
-        elif choice == 'M':
+            add_information(place_infos, have_not_visited_places)
+        elif choice == REMARK:
             """This statement will change a place visited/unvisited label."""
             print_information(place_infos)
-            print("marked.")
+            change_asterisk_label(place_infos)
         else:
             print(INVALID_CHOICE)
 
@@ -53,6 +60,15 @@ def read_csv_info():
         reader = csv.reader(place_infos_file)
         place_infos = [[text[0], text[1], text[2], text[3]] for text in reader]
     return place_infos
+
+
+def read_asterisk_information(place_infos):
+    """This function is to split the dataset to actual modification."""
+    none_visited_places = []
+    for place_info in place_infos:
+        if place_info[3] == 'n':
+            none_visited_places.append(place_info)
+    return none_visited_places
 
 
 def print_information(place_infos):
@@ -76,12 +92,15 @@ def print_information(place_infos):
     print(f"{len(place_infos)} places tracked. You still want to visit {asterisk_count} places.")
 
 
-def random_place(places_infos):
+def random_place(none_visited_places):
     """This function is to generate random number and print it."""
-    random_number = random.randint(0, len(places_infos) - 1)
-    random_city = places_infos[random_number][0]
-    random_country = places_infos[random_number][1]
-    print(f"Not sure where to visit next?\nHow about... {random_city} in {random_country}?")
+    random_number = random.randint(0, len(none_visited_places) - 1)
+    random_city = none_visited_places[random_number][0]
+    random_country = none_visited_places[random_number][1]
+    if len(none_visited_places) != 0:
+        print(f"Not sure where to visit next?\nHow about... {random_city} in {random_country}?")
+    else:
+        print("No places left to visit!")
 
 
 def get_valid_word(prompt):
@@ -95,8 +114,8 @@ def get_valid_word(prompt):
 
 def get_valid_number(prompt):
     """Confirm your input number is not negative or equal than 0"""
-    value_verify = False
-    while not value_verify:
+    value_verification = False
+    while not value_verification:
         try:
             value = int(input(prompt))
             if value > 0:
@@ -107,13 +126,36 @@ def get_valid_number(prompt):
             print("Invalid input; enter a valid number")
 
 
-def add_information(place_infos):
+def add_information(place_infos, none_visited_places):
     """Add the information into the List."""
     city_name = get_valid_word("Name: ")
     country_name = get_valid_word("Country: ")
     priority_number = get_valid_number("Priority: ")
     print(f"{city_name} in {country_name} (Priority {priority_number}) added to Travel Tracker.")
     place_infos.append([city_name, country_name, priority_number, 'n'])
+    none_visited_places.append([city_name, country_name, priority_number, 'n'])
+
+
+def change_asterisk_label(place_infos):
+    """Determine whether the book is completed and modify the status"""
+
+    priority_numbers = len(place_infos)
+    print("Enter the number of a place to mark as visited")
+    visiting_figure = get_valid_place_number(priority_numbers) - 1
+    if place_infos[visiting_figure][3] == NOT_VISITED:
+        place_infos[visiting_figure][3] = VISITED
+        print(f"{place_infos[visiting_figure][0]} by {place_infos[visiting_figure][1]} visited!")
+    else:
+        print(f"You have already visited {place_infos[visiting_figure][0]}!")
+
+
+def get_valid_place_number(index):
+    """Add book maximum value correction after number checking"""
+    value = get_valid_number(">>> ")
+    while value > index:
+        print("Invalid place number")
+        value = get_valid_number(">>> ")
+    return value
 
 
 def save_travel_information_into_file(place_infos):
