@@ -42,8 +42,11 @@ def main():
             add_information(place_infos, have_not_visited_places)
         elif choice == REMARK:
             """This statement will change a place visited/unvisited label."""
-            print_information(place_infos)
-            change_asterisk_label(place_infos)
+            if len(have_not_visited_places) == 0:
+                print("No unvisited places")
+            else:
+                print_information(place_infos)
+                change_asterisk_label(place_infos, have_not_visited_places)
         else:
             print(INVALID_CHOICE)
 
@@ -94,10 +97,10 @@ def print_information(place_infos):
 
 def random_place(none_visited_places):
     """This function is to generate random number and print it."""
-    random_number = random.randint(0, len(none_visited_places) - 1)
-    random_city = none_visited_places[random_number][0]
-    random_country = none_visited_places[random_number][1]
     if len(none_visited_places) != 0:
+        random_number = random.randint(0, len(none_visited_places) - 1)
+        random_city = none_visited_places[random_number][0]
+        random_country = none_visited_places[random_number][1]
         print(f"Not sure where to visit next?\nHow about... {random_city} in {random_country}?")
     else:
         print("No places left to visit!")
@@ -136,13 +139,14 @@ def add_information(place_infos, none_visited_places):
     none_visited_places.append([city_name, country_name, priority_number, 'n'])
 
 
-def change_asterisk_label(place_infos):
+def change_asterisk_label(place_infos, have_not_visited_places):
     """Determine whether the places is visited and convert the status."""
     priority_numbers = len(place_infos)
     print("Enter the number of a place to mark as visited")
     visiting_figure = get_valid_place_number(priority_numbers) - 1
     if place_infos[visiting_figure][3] == NOT_VISITED:
         place_infos[visiting_figure][3] = VISITED
+        have_not_visited_places.pop(len(have_not_visited_places)-1)
         print(f"{place_infos[visiting_figure][0]} by {place_infos[visiting_figure][1]} visited!")
     else:
         print(f"You have already visited {place_infos[visiting_figure][0]}!")
