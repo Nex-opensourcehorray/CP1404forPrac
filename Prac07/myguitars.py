@@ -4,7 +4,7 @@ from Prac07.guitar import Guitar
 
 
 def main():
-    """The actual real test about the guitar input."""
+    # The main function that conclude the whole procedure.
     guitars = []
     get_user_guitar(guitars)
     in_file = open('guitars.csv', 'r')
@@ -21,6 +21,7 @@ def main():
 
 
 def get_user_guitar(guitars):
+    # The function that get user favourite guitar input until name is blank.
     name = input("Name:")
     while name != "":
         """while name is not blank, if will continue grab the information from user."""
@@ -53,6 +54,7 @@ def display_my_guitar(guitars):
 
 
 def write_back_csv(guitars):
+    # The function that write back the List to sheet.
     with open('guitars.csv', 'w', encoding='utf-8') as out_file:
         for guitar in guitars:
             print(f"{guitar.name},{guitar.year},{guitar.cost}", file=out_file)
