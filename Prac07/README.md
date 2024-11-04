@@ -11,7 +11,7 @@ you to rollback and starting a collaboration with your classmate.
 ## 3 Main Lessons I have learned About "Clean Code" in this subject
 1. Developing a function: Don't Repeat Yourself (DRY) & Single Responsibility Principle (SRP)
 2. Do proper explanation: Docstring comments & inline comment helping the identify.
-3. Follow the PEP 8: Avoid Confusing naming and regularly constant the magic number.
+3. Follow the PEP 8: Prevent Confusing naming and regularly constant the magic number.
 
 ## Links to the Programming Patterns page and the CP1404 Practicals instructions repo
 1. https://github.com/CP1404/Starter/wiki/Programming-Patterns
