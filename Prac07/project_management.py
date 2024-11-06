@@ -5,11 +5,17 @@ Estimate using time: 3h 30m
 Real using time: 5h
 """
 from Prac07.project import Project
+import datetime
 
-FILENAME = 'projects.txt'
-WELCOME = 'Welcome to Pythonic Project Management'
-MENU = ('- (L)oad projects\n- (S)ave projects\n- (D)isplay projects\n- (F)ilter projects by date\n'
-        '- (A)dd new project\n- (U)pdate project\n- (Q)uit>>>')
+INNER_FILE = "projects.txt"
+MENU = ("- (L)oad projects\n"
+        "- (S)ave projects\n"
+        "- (D)isplay projects\n"
+        "- (F)ilter projects by date\n"
+        "- (A)dd new project\n"
+        "- (U)pdate project\n"
+        "- (Q)uit\n"
+        ">>> ")
 INVALID_CHOICE = 'Invalid menu choice'
 QUIT = 'Q'
 LOAD = 'L'
@@ -23,20 +29,22 @@ UPDATE = 'U'
 def main():
     """This function is to hold the menu option & your selection."""
     """Before get into the menu option, you should read in the document to the memory for first."""
-    print(WELCOME)
-    public_projects = read_file(FILENAME)
+    print("Welcome to Pythonic Project Management")
+    projects_detail = read_file_information(INNER_FILE)
     choice = input(MENU).upper()
     while choice != QUIT:
         if choice == LOAD:
             """This statement will load all the information from .txt."""
-            load_public_project()
+            load_projects()
         elif choice == SAVE:
-            """This statement will save the modification to .txt."""
-            save_file(public_projects)
+            """This statement will save the modification to a new.txt."""
+            save_data_to_another_file(projects_detail)
         elif choice == DISPLAY:
             """This statement will show the important and unimportant project."""
+            show_projects(projects_detail)
         elif choice == FILTER:
             """This statement will search the project."""
+            filter_projects(projects_detail)
         elif choice == ADD:
             """This statement will add another project."""
         elif choice == UPDATE:
@@ -46,43 +54,85 @@ def main():
 
         choice = input(MENU).upper()
 
-    print(f"Would you like to save to {FILENAME}?")
+    print(f"Would you like to save to {INNER_FILE}?")
     print("Thank you for using custom-built project management software.")
-    """This statement give an option whether you will overwrite .csv from the refresh List."""
+    """This statement give an option whether you will overwrite .txt from the refresh List."""
 
 
-def read_file(FILENAME):
-    public_projects = []
-    with open(FILENAME, 'r') as in_file:
-        in_file.readlines()
+def read_file_information(file_name):
+    """Read line and append to List from the selected or default file."""
+    projects_detail = []
+    with open(file_name, "r") as in_file:
+        in_file.readline()
         for line in in_file:
-            projects = line.strip().split('\t')
-            public_projects.append(Project(projects[0], projects[1], int(projects[2]), float(projects[3]),
-                                           int(projects[4])))
-    print(f"Loaded {len(public_projects)} projects from {FILENAME}")
-    return public_projects
+            parts = line.strip().split('\t')
+            projects_detail.append(Project(parts[0], parts[1], int(parts[2]), float(parts[3]), int(parts[4])))
+    print(f"Loaded {len(projects_detail)} projects from {file_name}")
+    return projects_detail
 
 
-def load_public_project():
-    file_name = input("Please input your filename:")
+def load_projects():
+    """User input the file to determine which file to read."""
+    file_name = input("Please enter the file name: ")
     try:
-        read_file(file_name)
+        read_file_information(file_name)
     except FileNotFoundError:
-        print(f"{file_name} is not existed! System will use the default file {FILENAME}")
-        read_file(FILENAME)
+        print(f"System will using the default file: {INNER_FILE}")
+        read_file_information(INNER_FILE)
 
 
-def save_file(public_projects):
-    file_name = input("Please select your filename to save:")
+def save_data_to_another_file(projects_detail):
+    """Find selected file that will save the information from List."""
+    file_name = input("Enter which document you want save:")
     if not file_name.endswith(".txt"):
         file_name += ".txt"
-    print(f"Save to {file_name} success!")
-    save_to_file(public_projects, file_name)
+    print(f"Save into {file_name} success")
+    save_data_to_file(projects_detail, file_name)
 
 
-def save_to_file(public_projects, file_name):
-    with open(file_name, "w") as on_file:
-        print("Name	Start Date	Priority	Cost Estimate	Completion Percentage", file=on_file)
-        for line in public_projects:
-            print(f"{line.name}\t{line.start_date}\t{line.priority}\t{line.cost_estimate}\t"
-                  f"{line.completion_percentage}", file=on_file)
+def save_data_to_file(projects_detail, file_name):
+    """Save data from the selected file."""
+    with open(file_name, "w") as out_file:
+        print("Name	Start Date	Priority	Cost Estimate	Completion Percentage", file=out_file)
+        for line in projects_detail:
+            print(f"{line.name}\t"
+                  f"{line.start_date}\t"
+                  f"{line.priority}\t"
+                  f"{line.cost_estimate}\t"
+                  f"{line.completion_percentage}", file=out_file)
+
+
+def show_projects(projects_detail):
+    """Display completed and uncompleted projects based on progress."""
+    show_information = sorted(projects_detail)
+    print("Incomplete projects:")
+    incomplete_projects = [line for line in show_information if not line.is_completed()]
+    for line in incomplete_projects:
+        print(f"\t{line}")
+    print("Completed projects:")
+    completed_projects = [line for line in show_information if line.is_completed()]
+    for line in completed_projects:
+        print(f"\t{line}")
+
+
+def filter_projects(projects_detail):
+    """Output the project after the valid selected date."""
+    show_information = sorted(projects_detail)
+    date = 0
+    valid_date = False
+    while not valid_date:
+        try:
+            date_string = input("Show projects that start after date (dd/mm/yy): ")
+            date = datetime.datetime.strptime(date_string, "%d/%m/%Y").date()
+            valid_date = True
+        except ValueError:
+            print("Please enter a valid date!")
+
+    for line in show_information:
+        project_start_date = datetime.datetime.strptime(line.start_date, "%d/%m/%Y").date()
+        if project_start_date >= date:
+            print(line)
+
+
+if __name__ == '__main__':
+    main()
