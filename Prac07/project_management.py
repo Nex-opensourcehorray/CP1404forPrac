@@ -49,6 +49,7 @@ def main():
             filter_projects(projects_detail)
         elif choice == ADD:
             """This statement will add another project."""
+            add_project(projects_detail)
         elif choice == UPDATE:
             """This statement will update some information in a specific project."""
         else:
