@@ -24,6 +24,8 @@ DISPLAY = 'D'
 FILTER = 'F'
 ADD = 'A'
 UPDATE = 'U'
+MINIMUM_NUMBER = 0
+MAXIMUM_PERCENTAGE = 100
 
 
 def main():
@@ -132,6 +134,55 @@ def filter_projects(projects_detail):
         project_start_date = datetime.datetime.strptime(line.start_date, "%d/%m/%Y").date()
         if project_start_date >= date:
             print(line)
+
+
+def add_project(projects_detail):
+    """Add an extra new project."""
+    print("Let's add a new project")
+    name = get_valid_string("Name: ")
+    day = 0
+    valid_daytime = False
+    while not valid_daytime:
+        try:
+            day = input("Start date (dd/mm/yy): ")
+            datetime.datetime.strptime(day, "%d/%m/%Y").date()
+            valid_daytime = True
+        except ValueError:
+            print("please enter a  valid day")
+    priority = int(get_valid_number("Priority: "))
+    cost = get_valid_number("Cost estimate: ")
+    percent_complete = int(get_valid_percentage("Percent complete: "))
+    projects_detail.append(Project(name, day, priority, cost, percent_complete))
+    show_projects(projects_detail)
+
+
+def get_valid_string(prompt):
+    value = input(prompt)
+    while value == "":
+        print(f"{prompt} can not be blank")
+        value = input(prompt)
+    return value
+
+
+def get_valid_number(prompt):
+    effect_number = False
+    while not effect_number:
+        try:
+            value = float(input(prompt))
+            if value < MINIMUM_NUMBER:
+                print("number should > 0")
+            else:
+                return value
+        except ValueError:
+            print("Please enter a valid number")
+
+
+def get_valid_percentage(prompt):
+    value = get_valid_number(prompt)
+    while value > MAXIMUM_PERCENTAGE:
+        print("Percentage can not > 100")
+        value = get_valid_number(prompt)
+    return value
 
 
 if __name__ == '__main__':
