@@ -52,14 +52,13 @@ def main():
             add_project(projects_detail)
         elif choice == UPDATE:
             """This statement will update some information in a specific project."""
+            update_project(projects_detail)
         else:
             print(INVALID_CHOICE)
 
         choice = input(MENU).upper()
-
-    print(f"Would you like to save to {INNER_FILE}?")
-    print("Thank you for using custom-built project management software.")
     """This statement give an option whether you will overwrite .txt from the refresh List."""
+    user_selection(projects_detail)
 
 
 def read_file_information(file_name):
@@ -137,6 +136,21 @@ def filter_projects(projects_detail):
             print(line)
 
 
+def update_project(projects_detail):
+    """Update input data to List."""
+    project_number = 0
+    for line in projects_detail:
+        print(f"{project_number} {line}")
+        project_number += 1
+    choice = int(get_valid_project_number("Project choice: ", projects_detail))
+    print(projects_detail[choice])
+    new_percentage = get_valid_percentage("New Percentage: ")
+    projects_detail[choice].completion_percentage = new_percentage
+    new_priority = add_new_value("New Priority:")
+    if new_priority != "":
+        projects_detail[choice].priority = new_priority
+
+
 def add_project(projects_detail):
     """Add an extra new project."""
     print("Let's add a new project")
@@ -184,6 +198,37 @@ def get_valid_percentage(prompt):
         print("Percentage can not > 100")
         value = get_valid_number(prompt)
     return value
+
+
+def get_valid_project_number(prompt, projects_detail):
+    value = get_valid_number(prompt)
+    while value >= len(projects_detail):
+        print("please enter a valid choice")
+        value = get_valid_number(prompt)
+    return value
+
+
+def add_new_value(prompt):
+    effect_number = False
+    value = input(prompt)
+    if value == "":
+        return ""
+    while not effect_number:
+        try:
+            if int(value) <= MINIMUM_NUMBER:
+                print("number should > 0")
+            else:
+                effect_number = True
+        except ValueError:
+            print("Please enter a valid number")
+    return value
+
+
+def user_selection(projects_detail):
+    user_input = input(f"Would you like to save to {INNER_FILE}?").upper()
+    if user_input == "Y" or user_input == "YES":
+        save_data_to_file(projects_detail, INNER_FILE)
+    print("Thank you for using custom-built project management software.")
 
 
 if __name__ == '__main__':
