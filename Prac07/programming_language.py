@@ -24,22 +24,19 @@ class ProgrammingLanguage:
         """Determine if language is dynamically typed."""
         return self.typing == "Dynamic"
 
-    def is_pointer_arithmetic(self):
-        return self.pointer_arithmetic == "Pointer_Arithmetic"
-
 
 def run_tests():
     """Run simple tests/demos on ProgrammingLanguage class."""
-    ruby = ProgrammingLanguage("Ruby", "Dynamic", True, 1995, "Pointer_Arithmetic")
-    python = ProgrammingLanguage("Python", "Dynamic", True, 1991, "Pointer_Arithmetic")
-    visual_basic = ProgrammingLanguage("Visual Basic", "Static", False, 1991, "Pointer_Arithmetic")
+    ruby = ProgrammingLanguage("Ruby", "Dynamic", True, 1995, True)
+    python = ProgrammingLanguage("Python", "Dynamic", True, 1991, True)
+    visual_basic = ProgrammingLanguage("Visual Basic", "Static", False, 1991, True)
 
     languages = [ruby, python, visual_basic]
     print(python)
 
     print("The pointer arithmetic typed languages are:")
     for language in languages:
-        if language.is_pointer_arithmetic():
+        if language.is_dynamic():
             print(language.name)
 
 
