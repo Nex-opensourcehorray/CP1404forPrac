@@ -24,3 +24,4 @@ for i in range(0, len(line)-1, 2):
 print(f"{name} was born in {country}")
 in_file.close()"""
 
+
