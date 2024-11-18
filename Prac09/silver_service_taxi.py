@@ -18,4 +18,4 @@ class SliverServiceTaxi(Taxi):
 
     def get_fare(self):
         """Return the price for the taxi trip."""
-        return f"${super().get_fare() + self.flagfall:.2f}"
+        return super().get_fare() + self.flagfall
