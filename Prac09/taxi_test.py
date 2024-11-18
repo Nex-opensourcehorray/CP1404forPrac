@@ -1,7 +1,12 @@
+"""
+CP1404/CP5632 Practical
+Taxi class with function test.
+"""
 from Prac09.taxi import Taxi
 
 
-def main():
+def run_test():
+    """The function used to verify the method."""
     my_taxi = Taxi("Prius1", 100)
     my_taxi.drive(40)
     print(my_taxi)
@@ -15,4 +20,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    run_test()
